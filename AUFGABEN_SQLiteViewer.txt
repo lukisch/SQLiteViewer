@@ -1,0 +1,12 @@
+AUFGABEN - SQLiteViewer
+=======================
+Status: ALLE ERLEDIGT - RELEASED
+Stand: 13.02.2026
+
+ERLEDIGTE FEATURES (v2.0.0):
+[x] 1. SQL-Editor mit Syntax-Highlighting
+[x] 2. CSV/Excel Export
+[x] 3. Volltext-Suche
+[x] 4. Schema-Ansicht
+
+Release: v2.0.0 auf GitHub veroeffentlicht.
