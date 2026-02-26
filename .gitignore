@@ -1,18 +1,41 @@
+# Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
 *.egg-info/
 dist/
 build/
 *.spec
 *.exe
-.env
+
+# Virtuelle Umgebungen
 .venv/
 venv/
+
+# Secrets
+.env
+
+# Planung & Interne Doku
+PLAN.txt
+
+# Private / Archive
+_archive/
+_private/
+
+# Logs
+*.log
+
+# Daten
 releases/
 *.db
 *.sqlite
 *.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# OS
 .DS_Store
 Thumbs.db
 desktop.ini
