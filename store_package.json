@@ -1,0 +1,14 @@
+{
+  "app_name": "SQLiteViewer",
+  "publisher": "CN=LukasGeiger",
+  "publisher_display": "Lukas Geiger",
+  "identity_name": "LukasGeiger.SQLiteViewer",
+  "version": "1.0.0.0",
+  "description": "Leichtgewichtiger SQLite-Datenbank-Browser mit GUI. Tabellen anzeigen, SQL-Abfragen, Export.",
+  "executable": "SQLiteViewer.exe",
+  "capabilities": "internetClient",
+  "category": "Developer Tools",
+  "age_rating": "3+",
+  "privacy_url": "https://github.com/lukisch/SQLiteViewer",
+  "support_url": "https://github.com/lukisch/SQLiteViewer/issues"
+}
