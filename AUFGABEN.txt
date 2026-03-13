@@ -1,0 +1,20 @@
+AUFGABEN - REL-PUB_SQLiteViewer
+================================
+Stand: 13.03.2026
+
+## BUGFIXES (Session 2026-03-13, Claude Opus)
+
+[x] MITTEL: Read-only Modus -- DB wird jetzt via URI im ro-Modus geoeffnet
+[x] MITTEL: SELECT-Erkennung case-insensitiv -- .upper() + WITH/EXPLAIN/PRAGMA abgedeckt
+[x] MITTEL: Column Headers bei leerem Ergebnis -- cur.description Guard gegen None
+[x] MITTEL: WM_DELETE_WINDOW -- _on_close Handler registriert, DB wird sauber geschlossen
+
+## OFFENE BUGS
+
+(keine bekannten)
+
+## GITHUB-POLICY Compliance (Stand: 05.03.2026)
+Referenz: .SOFTWARE/GITHUB-POLICY.md
+
+[x] README.md zweisprachig (DE-Abschnitt fehlt) -- DONE 2026-03-08 (Sonnet-Pruefung: DE-Abschnitt bereits vollstaendig vorhanden, EN-Abschnitt ebenfalls vorhanden)
+[x] requirements.txt -- bereits vorhanden (stdlib only, ATI-Pruefung 2026-03-08)

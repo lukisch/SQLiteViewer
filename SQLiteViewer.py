@@ -51,6 +51,9 @@ class SqlViewer(tk.Tk):
         # Styling
         self._setup_styles()
 
+        # BUG 4: Sauberes Schließen via WM_DELETE_WINDOW
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
+
     def _setup_styles(self):
         """Konfiguriere ttk Styles."""
         style = ttk.Style()
@@ -288,7 +291,7 @@ class SqlViewer(tk.Tk):
         self.close_db()
 
         try:
-            conn = sqlite3.connect(path)
+            conn = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
             conn.row_factory = sqlite3.Row
             self.conn = conn
             self.db_path = path
@@ -341,7 +344,10 @@ class SqlViewer(tk.Tk):
         if not table or not self.conn:
             return
 
-        limit = max(1, int(self.limit_var.get() or DEFAULT_LIMIT))
+        try:
+            limit = max(1, int(self.limit_var.get()))
+        except (ValueError, TypeError):
+            limit = DEFAULT_LIMIT
 
         try:
             # Spalten bestimmen
@@ -501,16 +507,21 @@ class SqlViewer(tk.Tk):
             start_time = datetime.now()
             cur = self.conn.execute(sql)
 
-            # Prüfe ob SELECT-Statement
-            if sql.upper().strip().startswith("SELECT"):
+            # Prüfe ob SELECT-artiges Statement (BUG 2: WITH/EXPLAIN/PRAGMA eingeschlossen)
+            sql_upper = sql.upper().strip()
+            if sql_upper.startswith(("SELECT", "WITH", "EXPLAIN", "PRAGMA")):
                 rows = cur.fetchall()
+                # BUG 3: Spaltenheader auch bei leeren Ergebnissen auslesen
+                cols = [desc[0] for desc in cur.description] if cur.description else []
                 if rows:
-                    cols = [desc[0] for desc in cur.description]
                     self._populate_sql_result(cols, rows)
                     elapsed = (datetime.now() - start_time).total_seconds()
                     self.sql_status.config(text=f"✓ {len(rows)} Zeilen in {elapsed:.3f}s")
                 else:
-                    self._clear_sql_result()
+                    if cols:
+                        self._populate_sql_result(cols, [])
+                    else:
+                        self._clear_sql_result()
                     self.sql_status.config(text="✓ Keine Ergebnisse")
             else:
                 self.conn.commit()
@@ -727,6 +738,11 @@ class SqlViewer(tk.Tk):
 
     def _set_status(self, text: str):
         self.status_var.set(text)
+
+    def _on_close(self):
+        """Sauberes Schließen: DB schließen, dann Fenster zerstören."""
+        self.close_db()
+        self.destroy()
 
     def _show_about(self):
         messagebox.showinfo(
